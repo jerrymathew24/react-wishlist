@@ -1,24 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 function App() {
+
+  const [wish,setWish] = useState()
+  const [wishlist,setWishlist] = useState([])
+
+  const onInputChange = (event) => {
+    setWish(event.target.value)
+  }
+
+  const onAddClick = () => {
+    setWishlist([...wishlist, {id:uuid(), wish:wish}])
+    console.log(wishlist);
+    
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div>
+        <h1>Wishlist App</h1>
+      </div>
+      <div>
+        <input value={wish} onChange={onInputChange} type="text" placeholder="Enter your Wish" />
+        <button onClick={onAddClick}>Add</button>
+      </div>
+      <div>
+        <h2>My Wishlist</h2>
+        <ul>
+          {wishlist.map(item => (
+            <li key={item.id}>{item.wish}</li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }
 
